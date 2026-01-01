@@ -1,0 +1,25 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: home-energy-tracker
+    restart: always
+    environment:
+      # Set the root password
+      MARIADB_ROOT_PASSWORD: mypassword
+      # Optional: Create a default database on startup
+      MARIADB_DATABASE: home_energy_tracker
+    ports:
+      - "3306:3306"
+    volumes:
+      # Persist data to a named volume on the host
+      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mariadb_data:/var/lib/mariadb
+      - mariadb_data:/var/log/mariadb
+
+
+volumes:
+  mariadb_data:
+
+networks:
+  app-network:
+    driver: bridge
