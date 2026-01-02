@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -24,15 +22,10 @@ public class UserService {
 
 
     public UserDto createUser(UserDto dto){
-        log.info("Creating user : {}", dto);
-
         return this.mapToDto(this.userRepository.save(this.mapToEntity(dto)));
     }
 
     public void updateUser(Long id, UserDto dto){
-        log.info("Update User {}", id);
-        log.info("Updating data {}", dto);
-
         User user = this.userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User Not found"));
 
         user.setName(dto.name());
